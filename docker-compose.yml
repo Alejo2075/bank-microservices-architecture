@@ -13,6 +13,7 @@ services:
     command:
       - "-jar DynamoDBLocal.jar -sharedDb -dbPath /data"
 
+
 volumes:
   user-data:
 
