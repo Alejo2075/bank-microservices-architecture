@@ -1,4 +1,4 @@
-package com.julieta.auth_service.exception;
+package com.julieta.verificationservice.exception;
 
 public class NotSendVerificationCodeException extends Exception{
 

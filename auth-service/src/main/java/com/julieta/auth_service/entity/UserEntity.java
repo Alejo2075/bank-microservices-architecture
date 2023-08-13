@@ -26,11 +26,17 @@ public class UserEntity {
     @DynamoDBAttribute
     private String lastName;
 
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "email")
+    private String email;
+
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "phoneNumber")
     private String phoneNumber;
 
     @DynamoDBAttribute
     private String password;
+
+    @DynamoDBAttribute
+    private String photo;
 
     @DynamoDBAttribute
     private boolean verified;

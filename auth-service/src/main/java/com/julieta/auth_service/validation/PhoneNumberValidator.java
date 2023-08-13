@@ -10,7 +10,7 @@ public class PhoneNumberValidator  implements ConstraintValidator<ValidPhoneNumb
 
     @Override
     public boolean isValid(String phoneNumber, ConstraintValidatorContext context) {
-        return phoneNumber.matches("^53\\d{8}$");
+        return phoneNumber.matches("^\\d{10,11}$");
     }
 
 }

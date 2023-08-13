@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.context.ApplicationEvent;
 
+import static com.julieta.auth_service.util.UserConverter.convertFromRegistrationRequestToUser;
+
 
 @Data
 @Builder
@@ -19,12 +21,7 @@ public class OnRegistrationCompleteEvent extends ApplicationEvent {
     }
 
     public User getUser(){
-        return User.builder()
-                .id(request.getId())
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .phoneNumber(request.getPhoneNumber())
-                .build();
+        return UserConverter.convertFromRegistrationRequestToUser(request);
     }
 
 

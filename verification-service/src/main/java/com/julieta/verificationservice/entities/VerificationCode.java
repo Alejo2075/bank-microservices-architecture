@@ -1,7 +1,8 @@
-package com.julieta.auth_service.entity;
+package com.julieta.verificationservice.entities;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,12 +16,15 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@DynamoDBTable(tableName = "VerificationToken")
+@DynamoDBTable(tableName = "VerificationCode")
 public class VerificationCode {
 
 
     @DynamoDBHashKey
     private String userId;
+
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "email")
+    private String email;
 
     @DynamoDBAttribute
     private String code;

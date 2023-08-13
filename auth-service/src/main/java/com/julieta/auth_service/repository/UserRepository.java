@@ -8,6 +8,8 @@ import java.util.Optional;
 
 @EnableScan
 public interface UserRepository extends CrudRepository<UserEntity, String> {
+
+    Optional<UserEntity> findByEmail(String email);
     Optional<UserEntity> findByPhoneNumber(String phoneNumber);
 
 }

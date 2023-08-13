@@ -1,5 +1,6 @@
 package com.julieta.auth_service.dto;
 
+import com.julieta.auth_service.annotation.ValidEmail;
 import com.julieta.auth_service.annotation.ValidId;
 import com.julieta.auth_service.annotation.ValidPassword;
 import com.julieta.auth_service.annotation.ValidPhoneNumber;
@@ -28,6 +29,11 @@ public class RegistrationRequest {
     @NotNull
     @NotEmpty
     private String lastName;
+
+    @NotNull
+    @NotEmpty
+    @ValidEmail
+    private String email;
 
     @NotNull
     @NotEmpty

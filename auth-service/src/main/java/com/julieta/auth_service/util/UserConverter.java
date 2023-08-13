@@ -12,18 +12,9 @@ public class UserConverter {
                 .id(user.getId())
                 .firstName(capitalizeFirstLetter(user.getFirstName()))
                 .lastName(capitalizeFirstLetter(user.getLastName()))
+                .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
                 .password(user.getPassword())
-                .build();
-    }
-
-    public static User convertFromUserEntityToUser(UserEntity userEntity){
-        return User.builder()
-                .id(userEntity.getId())
-                .firstName(userEntity.getFirstName())
-                .lastName(userEntity.getLastName())
-                .phoneNumber(userEntity.getPhoneNumber())
-                .password(userEntity.getPassword())
                 .build();
     }
 
@@ -32,6 +23,7 @@ public class UserConverter {
                 .id(request.getId())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
+                .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
                 .password(request.getPassword())
                 .build();
