@@ -1,6 +1,7 @@
 package com.julieta.auth_service.config;
 
 import com.julieta.auth_service.jwt.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,30 +16,26 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
 
-    @Autowired
-    public WebSecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.authenticationProvider = authenticationProvider;
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/users/register", "/api/users/login").permitAll();
-                    auth.anyRequest().authenticated();
+                /*.authorizeHttpRequests(auth -> {
+                    *//*auth.requestMatchers("/api/users/register", "/api/users/login").permitAll();
+                    auth.anyRequest().authenticated();*//*
+                    auth.anyRequest().permitAll();
                 })
                 .sessionManagement(sess -> {
                     sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)*/
                 .build();
     }
 

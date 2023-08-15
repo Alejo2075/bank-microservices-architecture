@@ -22,7 +22,6 @@ import static com.julieta.auth_service.util.ResponseUtils.createErrorResponse;
 public class AuthController {
 
     private final AuthService userService;
-    private final ApplicationEventPublisher eventPublisher;
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@RequestBody @Valid RegistrationRequest request) {
