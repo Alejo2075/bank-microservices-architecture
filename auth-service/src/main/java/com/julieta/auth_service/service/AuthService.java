@@ -7,9 +7,11 @@ import com.julieta.auth_service.exception.DuplicateEmailException;
 import com.julieta.auth_service.exception.DuplicateIdException;
 import com.julieta.auth_service.exception.DuplicatePhoneNumberException;
 
+import javax.security.sasl.AuthenticationException;
+
 public interface AuthService {
 
     AuthenticationResponse registerUser(RegistrationRequest request) throws DuplicateIdException, DuplicatePhoneNumberException, DuplicateEmailException;
 
-    AuthenticationResponse loginUser(AuthenticationRequest request);
+    AuthenticationResponse loginUser(AuthenticationRequest request) throws AuthenticationException;
 }

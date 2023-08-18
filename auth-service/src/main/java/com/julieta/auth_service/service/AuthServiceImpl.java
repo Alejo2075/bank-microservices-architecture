@@ -3,6 +3,7 @@ package com.julieta.auth_service.service;
 import com.julieta.auth_service.dto.AuthenticationRequest;
 import com.julieta.auth_service.dto.AuthenticationResponse;
 import com.julieta.auth_service.dto.RegistrationRequest;
+import com.julieta.auth_service.entity.UserEntity;
 import com.julieta.auth_service.exception.DuplicateEmailException;
 import com.julieta.auth_service.exception.DuplicateIdException;
 import com.julieta.auth_service.exception.DuplicatePhoneNumberException;
@@ -10,10 +11,11 @@ import com.julieta.auth_service.jwt.JwtTokenProvider;
 import com.julieta.auth_service.model.User;
 import com.julieta.auth_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.security.sasl.AuthenticationException;
+import java.util.Optional;
 
 import static com.julieta.auth_service.util.UserConverter.*;
 
@@ -24,7 +26,6 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
-    private final AuthenticationManager authenticationManager;
 
     @Override
     public AuthenticationResponse registerUser(RegistrationRequest request) throws DuplicateIdException, DuplicatePhoneNumberException, DuplicateEmailException {
@@ -41,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(convertFromUserToUserEntity(user));
-        String jwtToken = tokenProvider.createToken(user.getPhoneNumber());
+        String jwtToken = tokenProvider.generateToken(user.getPhoneNumber());
 
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
@@ -49,19 +50,21 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthenticationResponse loginUser(AuthenticationRequest request) {
+    public AuthenticationResponse loginUser(AuthenticationRequest request) throws AuthenticationException {
         User user = convertFromAuthenticationRequestToUser(request);
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getPhoneNumber(),
-                        user.getPassword()
-                )
-        );
+        Optional<UserEntity> optionalUserEntity = userRepository.findByPhoneNumber(user.getPhoneNumber());
+        if(optionalUserEntity.isEmpty()){
+            throw new AuthenticationException("User with this phone number doesn't exist");
+        }
 
-        userRepository.findByPhoneNumber(user.getPhoneNumber());
+        UserEntity savedUserEntity = optionalUserEntity.get();
 
-        String jwtToken = tokenProvider.createToken(user.getPhoneNumber());
+        if (!passwordEncoder.matches(user.getPassword(), savedUserEntity.getPassword())) {
+            throw new AuthenticationException("Invalid password");
+        }
+
+        String jwtToken = tokenProvider.generateToken(user.getPhoneNumber());
 
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
