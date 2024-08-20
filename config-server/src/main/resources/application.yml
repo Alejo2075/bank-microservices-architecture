@@ -8,8 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://your-git-repo-url
-          clone-on-start: true
+          uri: https://github.com/Alejo2075/bank-ms-config
 
 
 
