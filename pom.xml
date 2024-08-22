@@ -19,9 +19,6 @@
 	<description>Architecture for a banking platform using microservices.</description>
 
 	<modules>
-		<module>config-server</module>
-		<module>api-gateway</module>
-		<module>discovery-server</module>
 	</modules>
 
 	<url>https://github.com/alejo2075/bank-microservices-architecture</url>
