@@ -1,1 +1,2 @@
-![Bank Microservices Architecture](https://github.com/user-attachments/assets/392aab09-ca8f-4a28-adeb-4fb9e5ea8ddb)
+![Bank Microservices Architecture ](https://github.com/user-attachments/assets/b33f179e-c079-440d-ac21-1fc552fec5d5)
+
