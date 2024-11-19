@@ -14,7 +14,8 @@ A scalable microservices architecture designed for digital banking, enabling sec
 - Balancing real-time processing with effective fraud detection to minimize latency.
 
 ## 🛠️ Architecture
-(Complete this section)
+![Bank Microservices Architecture drawio](https://github.com/user-attachments/assets/13a811f8-a6f9-4490-a9ae-e69695556009)
+
 
 ## 💻 Tech Stack
 (Complete this section)
